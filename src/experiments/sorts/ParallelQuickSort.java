@@ -15,16 +15,13 @@ import java.util.concurrent.RecursiveTask;
  * @Version 0.1
  */
 public class ParallelQuickSort {
-
-    protected static final ForkJoinPool POOL = new ForkJoinPool();
-    //ARRAY_SIZE and SEED allow for adjustment of the pseudorandom ArrayList<Integer> generator.
+    //
     private static final int ARRAY_SIZE = 100;
-    //Sequential cutoff for Fork/Join
     private static final int CUTOFF = 4;
-    //Direction constants used to avoid code duplication.
     public static final int LEFT = -1;
     public static final int CENTER = 0;
     public static final int RIGHT = 1;
+    protected static final ForkJoinPool POOL = new ForkJoinPool();
 
     public static void main(String[] args) {
         //Generate a pseudorandom ArrayList of values, then sort it.
@@ -56,14 +53,6 @@ public class ParallelQuickSort {
             return null;
         } else if (parentArrSize == 1) {
             return arr;
-        /*
-        } else if (parentArrSize == 2) {
-            if (arr.get(0) > arr.get(1)) {
-                Integer value = arr.remove(0);
-                arr.add(value);
-            }
-            return arr;
-            */
         }
 
         //Split into new branches recursively.
@@ -75,7 +64,7 @@ public class ParallelQuickSort {
         }
         rightBranch = sequentialQuickSort(splitArray(arr, RIGHT));
 
-        //Inorder Merge of result branches to form sorted ArrayList
+        // Inorder Merge of result branches to form sorted ArrayList
         ArrayList<Integer> sortedArr = new ArrayList<>();
         if(leftBranch != null) {
             sortedArr.addAll(leftBranch);
@@ -84,7 +73,6 @@ public class ParallelQuickSort {
         if(rightBranch != null) {
             sortedArr.addAll(rightBranch);
         }
-
         return sortedArr;
     }
 
@@ -98,7 +86,7 @@ public class ParallelQuickSort {
      */
     public static ArrayList<Integer> splitArray(ArrayList<Integer> arr, Integer direction) {
         if(direction == null) {
-            throw new IllegalArgumentException("Usage: ArrayList<Integer> array, Integer direction constant");
+            throw new IllegalArgumentException("This function requires a direction input. To survive.");
         } else if(arr == null || arr.isEmpty()) {
             return arr;
         }
